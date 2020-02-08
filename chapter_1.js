@@ -45,3 +45,5 @@ function statement(invoice, plays) {
 
   return result
 }
+
+module.exports = { statement }
