@@ -1,10 +1,13 @@
 function statement(invoice, plays) {
-  return renderPlainText(invoice, plays)
+  const statementData = {}
+  statementData.customer = invoice.customer
+  statementData.performances = invoice.performances
+  return renderPlainText(statementData, plays)
 }
 
-function renderPlainText(invoice, plays) {
+function renderPlainText(data, plays) {
   let totalAmount = 0
-  let result = `Statement for ${invoice.customer}\n`
+  let result = `Statement for ${data.customer}\n`
 
   function usd(aNumber) {
     return new Intl.NumberFormat('en-US', {
@@ -51,14 +54,14 @@ function renderPlainText(invoice, plays) {
 
   function totalVolumeCredits() {
     let result = 0
-    for (const perf of invoice.performances) {
+    for (const perf of data.performances) {
       result += volumeCreditsFor(perf)
     }
 
     return result
   }
 
-  for (const perf of invoice.performances) {
+  for (const perf of data.performances) {
     // 印出這筆訂單
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`
     totalAmount += amountFor(perf)
