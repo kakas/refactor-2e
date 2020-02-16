@@ -6,25 +6,12 @@ function statement(invoice, plays) {
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance)
     result.play = playFor(result)
+    result.amount = amountFor(result)
     return result
   }
 
   function playFor(aPerformance) {
     return plays[aPerformance.playID]
-  }
-  return renderPlainText(statementData)
-}
-
-function renderPlainText(data) {
-  let totalAmount = 0
-  let result = `Statement for ${data.customer}\n`
-
-  function usd(aNumber) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(aNumber / 100)
   }
 
   function amountFor(aPerformance) {
@@ -51,6 +38,21 @@ function renderPlainText(data) {
     return result
   }
 
+  return renderPlainText(statementData)
+}
+
+function renderPlainText(data) {
+  let totalAmount = 0
+  let result = `Statement for ${data.customer}\n`
+
+  function usd(aNumber) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    }).format(aNumber / 100)
+  }
+
   function volumeCreditsFor(aPerformance) {
     let result = 0
     result += Math.max(aPerformance.audience - 30, 0)
@@ -69,8 +71,8 @@ function renderPlainText(data) {
 
   for (const perf of data.performances) {
     // 印出這筆訂單
-    result += `${perf.play.name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`
-    totalAmount += amountFor(perf)
+    result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience} seats)\n`
+    totalAmount += perf.amount
   }
 
   result += `Amount owed is ${usd(totalAmount)}\n`
