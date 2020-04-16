@@ -1,7 +1,7 @@
-let tpHd = "untitled";
+let _title = "untitled";
 
 result += `<h1>${title()}</h1>`;
 setTitle(obj['articleTitle']);
-function title()       {return tpHd;}
-function setTitle(arg) {tpHd = arg;}
 
+function title()       {return _title;}
+function setTitle(arg) {_title = arg;}
