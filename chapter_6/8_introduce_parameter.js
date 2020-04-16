@@ -8,7 +8,7 @@ const station = { name: "ZB1",
   ]
 };
 
-function readingsOutsideRange(station, min, max) {
+function readingsOutsideRange(station, min, max, range) {
   return station.readings.filter(r => r.temp < min || r.temp > max);
 }
 
