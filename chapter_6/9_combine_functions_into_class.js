@@ -22,9 +22,9 @@ const aReading = new Reading(rawReading);
 const baseCharge = aReading.baseCharge;
 
 // client 2
-const aReading = acquireReading();
-const base = (baseRate(aReading.month, aReading.year) * aReading.quantity);
-const taxableCharge =  Math.max(0, base - taxThreshold(aReading.year));
+const rawReading = acquireReading();
+const aReading = new Reading(rawReading);
+const taxableCharge =  Math.max(0, aReading.baseCharge - taxThreshold(aReading.year));
 
 // client 3
 const rawReading = acquireReading();
